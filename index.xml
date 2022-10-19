@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>我的博客</title>
-    <link>http://violet.github.io/</link>
+    <link>https://violetcoded.github.io/</link>
     <description>Recent content on 我的博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="http://violet.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://violetcoded.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>第一篇文章</title>
-      <link>http://violet.github.io/one/</link>
+      <link>https://violetcoded.github.io/one/</link>
       <pubDate>Thu, 23 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://violet.github.io/one/</guid>
+      <guid>https://violetcoded.github.io/one/</guid>
       <description>你好啊 123123123
 print(&amp;#39;hello world&amp;#39;) </description>
     </item>
