@@ -2,18 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>我的博客</title>
-    <link>https://violetcoded.github.io/</link>
+    <link>https://github.com/violetcoded/violetcoded.github.io/</link>
     <description>Recent content on 我的博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://violetcoded.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://github.com/violetcoded/violetcoded.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>第一篇文章</title>
-      <link>https://violetcoded.github.io/one/</link>
-      <pubDate>Thu, 23 May 2019 00:00:00 +0000</pubDate>
+      <title>golang中zap库的使用</title>
+      <link>https://github.com/violetcoded/violetcoded.github.io/one/</link>
+      <pubDate>Tue, 10 Jan 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://violetcoded.github.io/one/</guid>
-      <description>你好啊 123123123
-print(&amp;#39;hello world&amp;#39;) </description>
+      <guid>https://github.com/violetcoded/violetcoded.github.io/one/</guid>
+      <description>关于zap日志库 全局定义一个lg *zap.Logger init函数中初始化，初始化lg，给lg设置一个核心和一些配置参数 俩个函数来辅助初始化， getEncoder()设置日志的格式，getLogWriter()设置文件输出到什么地方 — getencoder函数 func getEncoder() zapcore.Encoder { encoderConfig := zap.NewProductionEncoderConfig() //创建一个编码方式 encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder //设置时间格式 encoderConfig.TimeKey = &amp;#34;time&amp;#34; encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder encoderConfig.EncodeDuration = zapcore.SecondsDurationEncoder encoderConfig.EncodeCaller = zapcore.ShortCallerEncoder return zapcore.NewJSONEncoder(encoderConfig) } encoderconfig各个参数的含义
+TimeKey: &amp;#34;ts&amp;#34;,//时间对应的key名 LevelKey: &amp;#34;level&amp;#34;,//日志级别对应的key名 NameKey: &amp;#34;logger&amp;#34;,//logger名对应的key名 CallerKey: &amp;#34;caller&amp;#34;,//时间对应的key名 MessageKey: &amp;#34;msg&amp;#34;,//日志内容对应的key名，此参数必须不为空，否则日志主体不处理 StacktraceKey: &amp;#34;stacktrace&amp;#34;,//栈追踪的key名 LineEnding: zapcore.DefaultLineEnding,//默认换行，即使不设置 EncodeLevel: zapcore.LowercaseLevelEncoder,//小写 EncodeTime: zapcore.EpochTimeEncoder,//时间转为s EncodeDuration: zapcore.SecondsDurationEncoder,//日期转为s EncodeCaller: zapcore.ShortCallerEncoder,//记录调用路径格式为package/file:line getlogwrite函数
+func getLogWriter(filename string, maxSize, maxBackups, maxAge int) zapcore.WriteSyncer { //返回一个地址，文件写到哪里 lumberJackLogger := &amp;amp;lumberjack.</description>
     </item>
     
   </channel>

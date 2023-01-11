@@ -12,10 +12,10 @@
   <meta name="description" content="这里是森的个人博客" />
 
   
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.io/css/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.io/css/poole.css">
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.io/css/syntax.css">
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.io/css/hyde.css">
+  <link type="text/css" rel="stylesheet" href="https://github.com/violetcoded/violetcoded.github.iocss/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://github.com/violetcoded/violetcoded.github.iocss/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://github.com/violetcoded/violetcoded.github.iocss/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://github.com/violetcoded/violetcoded.github.iocss/hyde.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
 
 
@@ -24,7 +24,7 @@
   <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="https://violetcoded.github.io/index.xml" rel="alternate" type="application/rss+xml" title="我的博客" />
+  <link href="https://github.com/violetcoded/violetcoded.github.io/index.xml" rel="alternate" type="application/rss+xml" title="我的博客" />
   
 </head>
 
@@ -32,7 +32,7 @@
   <aside class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <a href="https://violetcoded.github.io/"><h1>我的博客</h1></a>
+      <a href="https://github.com/violetcoded/violetcoded.github.io"><h1>我的博客</h1></a>
       <p class="lead">
        这里是森的个人博客 
       </p>
@@ -40,12 +40,12 @@
 
     <nav>
       <ul class="sidebar-nav">
-        <li><a href="https://violetcoded.github.io/">Home</a> </li>
+        <li><a href="https://github.com/violetcoded/violetcoded.github.io">Home</a> </li>
         
       </ul>
     </nav>
 
-    <p>&copy; 2022. All rights reserved. </p>
+    <p>&copy; 2023. All rights reserved. </p>
   </div>
 </aside>
 
@@ -53,11 +53,16 @@
     <div class="posts">
 <article class="post">
   <h1 class="post-title">
-    <a href="https://violetcoded.github.io/one/">第一篇文章</a>
+    <a href="https://github.com/violetcoded/violetcoded.github.io/one/">golang中zap库的使用</a>
   </h1>
-  <time datetime="2019-05-23T00:00:00Z" class="post-date">Thu, May 23, 2019</time>
-  你好啊 123123123
-print(&#39;hello world&#39;) 
+  <time datetime="2023-01-10T00:00:00Z" class="post-date">Tue, Jan 10, 2023</time>
+  关于zap日志库 全局定义一个lg *zap.Logger init函数中初始化，初始化lg，给lg设置一个核心和一些配置参数 俩个函数来辅助初始化， getEncoder()设置日志的格式，getLogWriter()设置文件输出到什么地方 — getencoder函数 func getEncoder() zapcore.Encoder { encoderConfig := zap.NewProductionEncoderConfig() //创建一个编码方式 encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder //设置时间格式 encoderConfig.TimeKey = &#34;time&#34; encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder encoderConfig.EncodeDuration = zapcore.SecondsDurationEncoder encoderConfig.EncodeCaller = zapcore.ShortCallerEncoder return zapcore.NewJSONEncoder(encoderConfig) } encoderconfig各个参数的含义
+TimeKey: &#34;ts&#34;,//时间对应的key名 LevelKey: &#34;level&#34;,//日志级别对应的key名 NameKey: &#34;logger&#34;,//logger名对应的key名 CallerKey: &#34;caller&#34;,//时间对应的key名 MessageKey: &#34;msg&#34;,//日志内容对应的key名，此参数必须不为空，否则日志主体不处理 StacktraceKey: &#34;stacktrace&#34;,//栈追踪的key名 LineEnding: zapcore.DefaultLineEnding,//默认换行，即使不设置 EncodeLevel: zapcore.LowercaseLevelEncoder,//小写 EncodeTime: zapcore.EpochTimeEncoder,//时间转为s EncodeDuration: zapcore.SecondsDurationEncoder,//日期转为s EncodeCaller: zapcore.ShortCallerEncoder,//记录调用路径格式为package/file:line getlogwrite函数
+func getLogWriter(filename string, maxSize, maxBackups, maxAge int) zapcore.WriteSyncer { //返回一个地址，文件写到哪里 lumberJackLogger := &amp;lumberjack.
+  
+  <div class="read-more-link">
+    <a href="/violetcoded/violetcoded.github.io/one/">Read More…</a>
+  </div>
   
 </article>
 </div>
