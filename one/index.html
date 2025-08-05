@@ -1,164 +1,106 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<html lang="zh-CN">
 <head>
-  <link href="https://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.104.3" />
+    <meta charset="UTF-8">
+    <title>致我的爱人</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #f8f4f4, #e6f7ff);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
 
-  <title>golang中zap库的使用 &middot; 我的博客</title>
-  <meta name="description" content="" />
+        h1 {
+            color: #e84393;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
 
-  
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.iocss/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.iocss/poole.css">
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.iocss/syntax.css">
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.iocss/hyde.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+        p {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
 
+        .photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 5px solid #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
 
-  
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
 
-  
-  
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #e84393;
+            opacity: 0.7;
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+    </style>
 </head>
-
-  <body class="theme-base-08 ">
-  <aside class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      <a href="https://violetcoded.github.io"><h1>我的博客</h1></a>
-      <p class="lead">
-       这里是森的个人博客 
-      </p>
+<body>
+    <div class="hearts" id="hearts"></div>
+    <div class="container">
+        <h1>致我的爱人</h1>
+        <img src="your-photo.jpg" alt="我们的照片" class="photo">
+        <p>亲爱的，感谢你一直以来的陪伴与支持。你的笑容是我最大的幸福。</p>
+        <p>愿我们的爱情如这朵花一样，永远绽放。</p>
     </div>
 
-    <nav>
-      <ul class="sidebar-nav">
-        <li><a href="https://violetcoded.github.io">Home</a> </li>
-        
-      </ul>
-    </nav>
+    <script>
+        function createHearts() {
+            const hearts = document.getElementById('hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                hearts.appendChild(heart);
+            }
+        }
 
-    <p>&copy; 2023. All rights reserved. </p>
-  </div>
-</aside>
-
-    <main class="content container">
-    <div class="post">
-  <h1>golang中zap库的使用</h1>
-  <time datetime=2023-01-10T00:00:00Z class="post-date">Tue, Jan 10, 2023</time>
-  <h3 id="关于zap日志库">关于zap日志库</h3>
-<ul>
-<li>全局定义一个lg *zap.Logger</li>
-<li>init函数中初始化，初始化lg，给lg设置一个核心和一些配置参数</li>
-<li>俩个函数来辅助初始化， getEncoder()设置日志的格式，getLogWriter()设置文件输出到什么地方
-—
-<strong>getencoder函数</strong></li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span>   <span style="color:#a6e22e">getEncoder</span>() <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">Encoder</span> {
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">encoderConfig</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">NewProductionEncoderConfig</span>()   <span style="color:#75715e">//创建一个编码方式
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">encoderConfig</span>.<span style="color:#a6e22e">EncodeTime</span> = <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">ISO8601TimeEncoder</span> <span style="color:#75715e">//设置时间格式
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">encoderConfig</span>.<span style="color:#a6e22e">TimeKey</span> =   <span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">encoderConfig</span>.<span style="color:#a6e22e">EncodeLevel</span> = <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">CapitalLevelEncoder</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">encoderConfig</span>.<span style="color:#a6e22e">EncodeDuration</span> = <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">SecondsDurationEncoder</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">encoderConfig</span>.<span style="color:#a6e22e">EncodeCaller</span> = <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">ShortCallerEncoder</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">NewJSONEncoder</span>(<span style="color:#a6e22e">encoderConfig</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>encoderconfig各个参数的含义</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span> <span style="color:#a6e22e">TimeKey</span>:        <span style="color:#e6db74">&#34;ts&#34;</span>,<span style="color:#75715e">//时间对应的key名
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">LevelKey</span>:       <span style="color:#e6db74">&#34;level&#34;</span>,<span style="color:#75715e">//日志级别对应的key名
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">NameKey</span>:        <span style="color:#e6db74">&#34;logger&#34;</span>,<span style="color:#75715e">//logger名对应的key名
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">CallerKey</span>:      <span style="color:#e6db74">&#34;caller&#34;</span>,<span style="color:#75715e">//时间对应的key名
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">MessageKey</span>:     <span style="color:#e6db74">&#34;msg&#34;</span>,<span style="color:#75715e">//日志内容对应的key名，此参数必须不为空，否则日志主体不处理
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">StacktraceKey</span>:  <span style="color:#e6db74">&#34;stacktrace&#34;</span>,<span style="color:#75715e">//栈追踪的key名
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">LineEnding</span>:     <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">DefaultLineEnding</span>,<span style="color:#75715e">//默认换行，即使不设置
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">EncodeLevel</span>:    <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">LowercaseLevelEncoder</span>,<span style="color:#75715e">//小写
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">EncodeTime</span>:     <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">EpochTimeEncoder</span>,<span style="color:#75715e">//时间转为s
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">EncodeDuration</span>: <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">SecondsDurationEncoder</span>,<span style="color:#75715e">//日期转为s
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">EncodeCaller</span>:   <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">ShortCallerEncoder</span>,<span style="color:#75715e">//记录调用路径格式为package/file:line
-</span></span></span></code></pre></div><p><strong>getlogwrite函数</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span>   <span style="color:#a6e22e">getLogWriter</span>(<span style="color:#a6e22e">filename</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">maxSize</span>, <span style="color:#a6e22e">maxBackups</span>, <span style="color:#a6e22e">maxAge</span> <span style="color:#66d9ef">int</span>) <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">WriteSyncer</span> {   <span style="color:#75715e">//返回一个地址，文件写到哪里
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">lumberJackLogger</span> <span style="color:#f92672">:=</span>   <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">lumberjack</span>.<span style="color:#a6e22e">Logger</span>{   <span style="color:#75715e">//lumberjack 日志滚动器
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">Filename</span>: <span style="color:#a6e22e">filename</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">MaxSize</span>: <span style="color:#a6e22e">maxSize</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">MaxBackups</span>: <span style="color:#a6e22e">maxBackups</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">MaxAge</span>: <span style="color:#a6e22e">maxAge</span>,
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//此处用了一个缓存器的东西，也可以直接用os.file创建一个文件作为输出的地方，传入到zapcore.AddSync(os.file)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">AddSync</span>(<span style="color:#a6e22e">lumberJackLogger</span>)   <span style="color:#75715e">//core日志输出地方，可传入一个os.file
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><p><strong>init初始化函数</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//init logger
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span>   <span style="color:#a6e22e">Init</span>(<span style="color:#a6e22e">cfg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">settings</span>.<span style="color:#a6e22e">LogConfig</span>, <span style="color:#a6e22e">mode</span> <span style="color:#66d9ef">string</span>)   (<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>)   {
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">writeSyncer</span> <span style="color:#f92672">:=</span>   <span style="color:#a6e22e">getLogWriter</span>(<span style="color:#a6e22e">cfg</span>.<span style="color:#a6e22e">Filename</span>, <span style="color:#a6e22e">cfg</span>.<span style="color:#a6e22e">MaxSize</span>, <span style="color:#a6e22e">cfg</span>.<span style="color:#a6e22e">MaxBackups</span>, <span style="color:#a6e22e">cfg</span>.<span style="color:#a6e22e">MaxAge</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">encoder</span> <span style="color:#f92672">:=</span>   <span style="color:#a6e22e">getEncoder</span>()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">l</span> =   new(<span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">Level</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">UnmarshalText</span>([]byte(<span style="color:#a6e22e">cfg</span>.<span style="color:#a6e22e">Level</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span>   <span style="color:#66d9ef">nil</span>   {
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">core</span> <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">Core</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">mode</span> <span style="color:#f92672">==</span>   <span style="color:#e6db74">&#34;dev&#34;</span>   {
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">consoleEncoder</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">NewConsoleEncoder</span>(<span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">NewDevelopmentEncoderConfig</span>())
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//如果是开发者模式，会输出到控制台和文件各一份
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">core</span> = <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">NewTee</span>(
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">NewCore</span>(<span style="color:#a6e22e">encoder</span>, <span style="color:#a6e22e">writeSyncer</span>, <span style="color:#a6e22e">l</span>),
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">NewCore</span>(<span style="color:#a6e22e">consoleEncoder</span>, <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">Lock</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdout</span>), <span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">DebugLevel</span>),
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  )
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  }   <span style="color:#66d9ef">else</span>   {
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">core</span> = <span style="color:#a6e22e">zapcore</span>.<span style="color:#a6e22e">NewCore</span>(<span style="color:#a6e22e">encoder</span>, <span style="color:#a6e22e">writeSyncer</span>, <span style="color:#a6e22e">l</span>)   <span style="color:#75715e">//创建一个核心，三个参数分别是编译器文件怎么写进去，地址文件写到哪，日志等级
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lg</span> = <span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">core</span>, <span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">AddCaller</span>())   <span style="color:#75715e">//根据一个核心和一些配置来实例化一个日志工具
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">ReplaceGlobals</span>(<span style="color:#a6e22e">lg</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">zap</span>.<span style="color:#a6e22e">L</span>().<span style="color:#a6e22e">Info</span>(<span style="color:#e6db74">&#34;init logger success&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>参考文章：
-– <a href="https://blog.csdn.net/xz_studying/article/details/103944445">(85条消息) zap——从Config自定义日志格式_yuchenfw的博客-CSDN博客</a>
-– <a href="https://blog.csdn.net/qq_43514659/article/details/121567519">(85条消息) zap日志的基本使用（go必会知识*）_木木不会的博客-CSDN博客_zap日志</a></p>
-
-</div>
-
-
-    </main>
-
-    
-      
-    
-  </body>
+        createHearts();
+    </script>
+</body>
 </html>
