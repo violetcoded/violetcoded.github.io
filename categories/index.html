@@ -1,62 +1,106 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<html lang="zh-CN">
 <head>
-  <link href="https://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.104.3" />
+    <meta charset="UTF-8">
+    <title>致我的爱人</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #f8f4f4, #e6f7ff);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
 
-  <title>Categories &middot; 我的博客</title>
-  <meta name="description" content="" />
+        h1 {
+            color: #e84393;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
 
-  
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.iocss/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.iocss/poole.css">
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.iocss/syntax.css">
-  <link type="text/css" rel="stylesheet" href="https://violetcoded.github.iocss/hyde.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+        p {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
 
+        .photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 5px solid #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
 
-  
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
 
-  
-  <link href="https://violetcoded.github.io/categories/index.xml" rel="alternate" type="application/rss+xml" title="我的博客" />
-  
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #e84393;
+            opacity: 0.7;
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+    </style>
 </head>
-
-  <body class="theme-base-08 ">
-  <aside class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      <a href="https://violetcoded.github.io"><h1>我的博客</h1></a>
-      <p class="lead">
-       这里是森的个人博客 
-      </p>
+<body>
+    <div class="hearts" id="hearts"></div>
+    <div class="container">
+        <h1>致我的爱人</h1>
+        <img src="your-photo.jpg" alt="我们的照片" class="photo">
+        <p>亲爱的，感谢你一直以来的陪伴与支持。你的笑容是我最大的幸福。</p>
+        <p>愿我们的爱情如这朵花一样，永远绽放。</p>
     </div>
 
-    <nav>
-      <ul class="sidebar-nav">
-        <li><a href="https://violetcoded.github.io">Home</a> </li>
-        
-      </ul>
-    </nav>
+    <script>
+        function createHearts() {
+            const hearts = document.getElementById('hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                hearts.appendChild(heart);
+            }
+        }
 
-    <p>&copy; 2023. All rights reserved. </p>
-  </div>
-</aside>
-
-    <main class="content container">
-    <ul class="posts">
-
-</ul>
-    </main>
-
-    
-      
-    
-  </body>
+        createHearts();
+    </script>
+</body>
 </html>
